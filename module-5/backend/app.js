@@ -12,11 +12,6 @@ const Goal = require("./models/goal");
 
 const app = express();
 
-// const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DB } =
-//   process.env;
-
-// const mongoUri = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/?authSource=${MONGO_DB}`;
-
 // Create logs directory if not exists
 const logDir = path.join(__dirname, "logs");
 if (!fs.existsSync(logDir)) {
@@ -29,7 +24,7 @@ const accessLogStream = fs.createWriteStream(path.join(logDir, "access.log"), {
 });
 
 // Middleware
-app.use(cors()); // Enables CORS for all origins
+app.use(cors());
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
 
@@ -89,9 +84,11 @@ app.delete("/goals/:id", async (req, res) => {
   }
 });
 
-// Connect to MongoDB and start server
+// Get Mongo URI from environment
+const MONGO_URI = process.env.MONGO_URI;
+
 mongoose.connect(
-  "mongodb://admin:secret@host.docker.internal:27017/?authSource=admin",
+  MONGO_URI,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
