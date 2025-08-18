@@ -1,0 +1,15 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.env
+.env.*  # optional if you have .env.local, .env.production, etc.
+
+# Custom environment folder
+env/*.env
+
+
